@@ -31,14 +31,39 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Agn-gB-VwP">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Agn-gB-VwP" customClass="ImageResultCollectionViewCell" customModule="Challenge" customModuleProvider="target">
                                         <rect key="frame" x="87.5" y="0.0" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PLA-RW-rrb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cgW-jW-Thm">
+                                                    <rect key="frame" x="0.0" y="183" width="200" height="17"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
                                         </view>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="PLA-RW-rrb" firstAttribute="leading" secondItem="Agn-gB-VwP" secondAttribute="leading" id="FJV-Ms-sa1"/>
+                                            <constraint firstItem="PLA-RW-rrb" firstAttribute="top" secondItem="Agn-gB-VwP" secondAttribute="top" id="bmW-l7-ZiK"/>
+                                            <constraint firstAttribute="trailing" secondItem="PLA-RW-rrb" secondAttribute="trailing" id="maI-4T-l1L"/>
+                                            <constraint firstAttribute="trailing" secondItem="cgW-jW-Thm" secondAttribute="trailing" id="nde-FA-6ci"/>
+                                            <constraint firstAttribute="bottom" secondItem="PLA-RW-rrb" secondAttribute="bottom" id="rcn-8u-3Pr"/>
+                                            <constraint firstItem="cgW-jW-Thm" firstAttribute="leading" secondItem="Agn-gB-VwP" secondAttribute="leading" id="vFC-fZ-ZMI"/>
+                                            <constraint firstAttribute="bottom" secondItem="cgW-jW-Thm" secondAttribute="bottom" id="zqW-8F-jR0"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="PLA-RW-rrb" id="vpc-2S-he1"/>
+                                            <outlet property="nameTextField" destination="cgW-jW-Thm" id="5q7-p6-3tM"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
