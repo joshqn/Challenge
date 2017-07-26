@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 
 typealias SearchComplete = (_ isSuccessful: Bool, _ response: [ImageResult]?) -> Void
-typealias ImageDownloadComplete = () -> Void
+typealias ImageDownloadComplete = (_ isSucceessful: Bool) -> Void
 
 class Search {
   static let downloader = ImageDownloader()
@@ -80,8 +80,61 @@ class Search {
           completion(false, nil)
         }
         
-        
     }
   }
   
+  static func downloadImageWith(urlRequest: URLRequest, with id: String, completion: @escaping ImageDownloadComplete) -> RequestReceipt? {
+    
+    // Check if we already have the image cached
+    if downloader.imageCache?.image(for: urlRequest, withIdentifier: id) == nil {
+      // Create a requestReceipt and start the download
+      let requestReceipt = downloader.download(urlRequest) { (response) in
+        // Check for errors
+        if response.result.error == nil {
+          if let image = response.result.value {
+            // Add image to cache
+            downloader.imageCache?.add(image, for: urlRequest, withIdentifier: id)
+            completion(true)
+          }
+        } else {
+          // An error occured so we indicate the download wasn't completed successfully
+          completion(false)
+        }
+      }
+      // return the requestReceipt so the cell can cancel if it needs to
+      return requestReceipt
+    } else {
+      // If there is an image in cache then we can send back a completion
+      completion(true)
+    }
+    
+    return nil
+  }
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
