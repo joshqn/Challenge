@@ -77,6 +77,8 @@ class SearchViewController: UIViewController {
     if segue.identifier == detailSegueIdentifier {
       let detailVC = segue.destination as! DetailViewController
       let indexPath = sender as! IndexPath
+      let imageResult = imageResults[indexPath.row]
+      detailVC.imageResult = imageResult
     }
   }
   
