@@ -68,11 +68,55 @@
                     <connections>
                         <outlet property="collectionView" destination="iS9-tv-HCQ" id="WRG-Cy-RdN"/>
                         <outlet property="searchBar" destination="ZWr-Oh-9SZ" id="JGV-x4-aCM"/>
+                        <segue destination="g0g-2D-cVM" kind="presentation" identifier="ModalDetail" id="iXo-hn-2q4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="gS9-jE-cGf">
+            <objects>
+                <viewController id="g0g-2D-cVM" customClass="DetailViewController" customModule="Challenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pg0-Ja-8Xw"/>
+                        <viewControllerLayoutGuide type="bottom" id="YdN-NK-pyL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fYT-U3-jxY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07a-60-ZkJ">
+                                <rect key="frame" x="67" y="193" width="240" height="280"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eO4-Lp-6BZ">
+                                        <rect key="frame" x="8" y="8" width="39" height="30"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="closeButtonTapped:" destination="g0g-2D-cVM" eventType="touchUpInside" id="eo6-RJ-vlb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="CJu-MQ-3bL"/>
+                                    <constraint firstItem="eO4-Lp-6BZ" firstAttribute="top" secondItem="07a-60-ZkJ" secondAttribute="top" constant="8" id="GDA-uy-yhx"/>
+                                    <constraint firstItem="eO4-Lp-6BZ" firstAttribute="leading" secondItem="07a-60-ZkJ" secondAttribute="leading" constant="8" id="Gly-g8-ZQ1"/>
+                                    <constraint firstAttribute="height" constant="280" id="hKN-qh-79m"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="07a-60-ZkJ" firstAttribute="centerY" secondItem="fYT-U3-jxY" secondAttribute="centerY" id="EPK-WY-3hE"/>
+                            <constraint firstItem="07a-60-ZkJ" firstAttribute="centerX" secondItem="fYT-U3-jxY" secondAttribute="centerX" id="X8b-00-jQr"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xBd-4w-dp4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1004" y="139"/>
         </scene>
     </scenes>
 </document>

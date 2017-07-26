@@ -12,6 +12,7 @@
 		B06CE13F1F292396004E7693 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B06CE13E1F292396004E7693 /* Assets.xcassets */; };
 		B06CE1421F292396004E7693 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06CE1401F292396004E7693 /* LaunchScreen.storyboard */; };
 		B06CE14B1F29245F004E7693 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06CE14A1F29245F004E7693 /* SearchViewController.swift */; };
+		B06CE14D1F292CF8004E7693 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06CE14C1F292CF8004E7693 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		B06CE1411F292396004E7693 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B06CE1431F292396004E7693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B06CE14A1F29245F004E7693 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		B06CE14C1F292CF8004E7693 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				B06CE14A1F29245F004E7693 /* SearchViewController.swift */,
+				B06CE14C1F292CF8004E7693 /* DetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B06CE14D1F292CF8004E7693 /* DetailViewController.swift in Sources */,
 				B06CE14B1F29245F004E7693 /* SearchViewController.swift in Sources */,
 				B06CE1381F292396004E7693 /* AppDelegate.swift in Sources */,
 			);
@@ -308,6 +312,7 @@
 				B06CE1481F292396004E7693 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
