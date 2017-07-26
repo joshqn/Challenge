@@ -15,10 +15,17 @@ class DetailViewController: UIViewController {
     
     createAndAddGestureRecognizer()
     
+    view.backgroundColor = .clear
   }
 
   override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    modalPresentationStyle = .custom
+    transitioningDelegate = self
   }
   
   func createAndAddGestureRecognizer() {
@@ -37,5 +44,12 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return (touch.view === self.view)
+  }
+}
+
+// MARK: UIViewControllerTransitionDelegate
+extension DetailViewController: UIViewControllerTransitioningDelegate {
+  func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
   }
 }
