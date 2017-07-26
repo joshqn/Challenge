@@ -69,6 +69,8 @@ class SearchViewController: UIViewController {
       }
       
     }
+    // Iterate the page to load
+    page += 1
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -129,11 +131,13 @@ extension SearchViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 50
+    return imageResults.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImageResultCollectionViewCell
+    let imageResult = imageResults[indexPath.row]
+    cell.configure(for: imageResult)
     
     return cell
   }
