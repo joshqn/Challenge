@@ -83,7 +83,7 @@ class Search {
     }
   }
   
-  static func downloadImageWith(urlRequest: URLRequest, with id: String, completion: @escaping ImageDownloadComplete) -> RequestReceipt? {
+  static func downloadImageWith(urlRequest: URLRequest, withiD id: String, completion: @escaping ImageDownloadComplete) -> RequestReceipt? {
     
     // Check if we already have the image cached
     if downloader.imageCache?.image(for: urlRequest, withIdentifier: id) == nil {
@@ -109,6 +109,10 @@ class Search {
     }
     
     return nil
+  }
+  
+  static func cancelRequestWith(requestReceipt: RequestReceipt) {
+    downloader.cancelRequest(with: requestReceipt)
   }
   
 }
