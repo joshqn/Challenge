@@ -15,17 +15,26 @@ class SearchViewController: UIViewController {
   
   var lineSpacing:CGFloat = 8
   var minInterSpacing:CGFloat = 8
+  let detailSegueIdentifier = "ModalDetail"
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-      collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+  override func viewDidLoad() {
+      super.viewDidLoad()
+    
+    collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
 
-    }
+  }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+  override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == detailSegueIdentifier {
+      let detailVC = segue.destination as! DetailViewController
+      let indexPath = sender as! IndexPath
     }
+  }
+  
 }
 
 //MARK: UICollectionViewDataSource
@@ -52,7 +61,7 @@ extension SearchViewController: UICollectionViewDataSource {
 //MARK: UICollectionViewDelegate
 extension SearchViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    print("Selected")
+    performSegue(withIdentifier: detailSegueIdentifier, sender: indexPath)
   }
 }
 

@@ -10,16 +10,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-      createAndAddGestureRecognizer()
-      
-    }
+  override func viewDidLoad() {
+      super.viewDidLoad()
+    
+    createAndAddGestureRecognizer()
+    
+  }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+  override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
+  }
   
   func createAndAddGestureRecognizer() {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeButtonTapped(_:)))
@@ -27,6 +27,7 @@ class DetailViewController: UIViewController {
     tapGesture.delegate = self
     view.addGestureRecognizer(tapGesture)
   }
+  
   @IBAction func closeButtonTapped(_ sender: Any) {
     dismiss(animated: true, completion: nil)
   }
