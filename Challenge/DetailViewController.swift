@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    // Override the default style so it knows a custom one needs to be used
     modalPresentationStyle = .custom
     transitioningDelegate = self
   }
@@ -51,5 +52,13 @@ extension DetailViewController: UIGestureRecognizerDelegate {
 extension DetailViewController: UIViewControllerTransitioningDelegate {
   func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
     return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
+  }
+  
+  func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    return BounceAnimationController()
+  }
+  
+  func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    return SlideOutAnimationController()
   }
 }
