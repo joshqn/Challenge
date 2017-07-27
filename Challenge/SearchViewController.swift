@@ -13,11 +13,15 @@ class SearchViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var searchBar: UISearchBar!
   
+  // Variables for spacing of the collectionView
   var lineSpacing:CGFloat = 8
   var minInterSpacing:CGFloat = 8
+  
   let detailSegueIdentifier = "ModalDetail"
+  let collectionViewCellIdentifier = "Cell"
   var page = 0
   
+  // These help indicate where new results need to be inserted
   var startingNumberOfCells = 0
   var endingNumberOfCells = 0
   
@@ -42,6 +46,7 @@ class SearchViewController: UIViewController {
       super.didReceiveMemoryWarning()
   }
   
+  // Grabs search results to add to the imageResults array
   func searchForImageWith(name: String) {
     Search.performSearchFor(imageName: name, page: page) { (error, results) in
       
@@ -134,7 +139,7 @@ extension SearchViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImageResultCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellIdentifier, for: indexPath) as! ImageResultCollectionViewCell
     let imageResult = imageResults[indexPath.row]
     cell.configure(for: imageResult)
     

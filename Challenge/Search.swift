@@ -136,7 +136,7 @@ class Search {
   }
   
   // If a search doesn't complete then it's cancelled here using the currentRequest
-  // further up the currentRequest is set back to nil after error propogation
+  // further up the currentRequest is set back to nil after error propagation
   static func cancelSearch() {
     if let currentRequest = currentRequest {
       cancelCurrentRequest = true
