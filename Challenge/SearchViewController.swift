@@ -28,11 +28,13 @@ class SearchViewController: UIViewController {
     }
   }
   var isLoading = false
+  var framesShortestSideLength:CGFloat = 0
   
   override func viewDidLoad() {
       super.viewDidLoad()
     
     collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+    framesShortestSideLength = CGFloat(self.view.frame.width < self.view.frame.height ? self.view.frame.width : self.view.frame.height)
 
   }
 
@@ -41,13 +43,13 @@ class SearchViewController: UIViewController {
   }
   
   func searchForImageWith(name: String) {
-    Search.performSearchFor(imageName: name, page: page) { (isSuccessful, results) in
+    Search.performSearchFor(imageName: name, page: page) { (error, results) in
       
       // We're done loading the results of our search
       self.isLoading = false
       
       // If our search is succesful execute this block
-      if isSuccessful {
+      if error == nil {
         
         // Verify we got results
         if let results = results {
@@ -63,9 +65,11 @@ class SearchViewController: UIViewController {
           // If results is nil then there are no more results so we display this alert
           self.noMoreResultsAlert()
         }
-      } else {
+      } else if error == .badRequest {
         // Indicate there is an issue with the network
         self.networkAlert()
+      } else if error == .cancelledRequest {
+        // Previous request was cancelled because of a new request
       }
       
     }
@@ -83,6 +87,7 @@ class SearchViewController: UIViewController {
   }
   
   // MARK: Helper Functions
+  // Creates indexPaths to be inserted
   func createIndexPathsToInsertIntoCollectionView() -> [IndexPath] {
     var indexPaths: [IndexPath] = []
     
@@ -94,6 +99,7 @@ class SearchViewController: UIViewController {
     return indexPaths
   }
   
+  // Creates indexPaths to be Deleted
   func IndexPathsToBeDeleted() -> [IndexPath] {
     var indexPaths:[IndexPath] = []
     
@@ -166,7 +172,15 @@ extension SearchViewController: UICollectionViewDelegate {
 //MARK: UICollectionViewDelegateFlowLayout
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = Int(((self.view.frame.width) / 3) - (lineSpacing + minInterSpacing))
+    var width = 0
+    
+    // Check if we're on an ipad. If so we want more cells per row because of the image size
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) {
+      width = Int(((framesShortestSideLength) / 5) - (lineSpacing + minInterSpacing))
+    } else {
+      width = Int(((framesShortestSideLength) / 3) - (lineSpacing + minInterSpacing))
+    }
+    
     return CGSize(width: width, height: width)
   }
   
@@ -191,6 +205,13 @@ extension SearchViewController: UISearchBarDelegate {
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    
+    // If we're in the loading state then we need to cancel our current search that is loading
+    if isLoading {
+      Search.cancelSearch()
+    }
+    
+    // If we're not already loading then we need to make sure the state isLoading is true
     isLoading = true
     
     // Check if the imageResults array is currently holding anything
@@ -199,7 +220,10 @@ extension SearchViewController: UISearchBarDelegate {
       collectionView.reloadData()
     }
     
+    // Reset the page we want to search for
     page = 1
+    
+    //Make a search using the text in the searchBar
     searchForImageWith(name: searchBar.text!)
     
     searchBar.resignFirstResponder()

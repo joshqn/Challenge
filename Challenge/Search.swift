@@ -10,12 +10,21 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
-typealias SearchComplete = (_ isSuccessful: Bool, _ response: [ImageResult]?) -> Void
+enum RequestError: Error {
+  case badRequest
+  case cancelledRequest
+}
+
+typealias SearchComplete = (_ error: RequestError?, _ response: [ImageResult]?) -> Void
 typealias ImageDownloadComplete = (_ isSucceessful: Bool) -> Void
 
 class Search {
-  static let downloader = ImageDownloader()
   
+  static let downloader = ImageDownloader()
+  private static var currentRequest: DataRequest?
+  private static var cancelCurrentRequest = false
+  
+  // Searching for the result of a keyword
   static func performSearchFor(imageName: String, page: Int, completion: @escaping SearchComplete) {
     var imageResults: [ImageResult] = []
     
@@ -30,14 +39,17 @@ class Search {
     UIApplication.shared.isNetworkActivityIndicatorVisible = true
     
     // Fetch Request
-    Alamofire.request("https://api.500px.com/v1/photos/search", parameters: urlParams)
+    currentRequest = Alamofire.request("https://api.500px.com/v1/photos/search", parameters: urlParams)
       .responseJSON { response in
         
-        // Stop network activity indicator
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        // Invalidate the current request since we've received a response
+        currentRequest = nil
         
-        // Check for errors with the results
+        // Check for errors
         if (response.result.error == nil) {
+          
+          // Stop network activity indicator
+          UIApplication.shared.isNetworkActivityIndicatorVisible = false
           
           // Serialized Json result dictionary
           guard let resultDict = response.result.value as? [String: Any] else { return }
@@ -46,7 +58,7 @@ class Search {
           guard let pageCount = resultDict["total_pages"] as? Int else { return }
           // If the page we're searching for is larger than the possible pages then search is done
           if pageCount < page {
-            completion(true, nil)
+            completion(nil, nil)
           }
           
           // Grabbing the array of photos we received back
@@ -73,11 +85,18 @@ class Search {
           }
           
           // Successful and return all of the imageResults
-          completion(true, imageResults)
-        }
-        else {
-          // An error occured and we've got no results
-          completion(false, nil)
+          completion(nil, imageResults)
+          
+        } else if cancelCurrentRequest == true {
+          // The current request was cancelled so we need to set it to nil for the next request
+          cancelCurrentRequest = false
+          completion(.cancelledRequest , nil)
+          
+        } else {
+          // An error occured with the network
+          completion(.badRequest , nil)
+          // Stop network activity indicator
+          UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
     }
@@ -111,8 +130,18 @@ class Search {
     return nil
   }
   
+  // Cancels image downloads if the cell they're being loaded for is reused before it's completed
   static func cancelRequestWith(requestReceipt: RequestReceipt) {
     downloader.cancelRequest(with: requestReceipt)
+  }
+  
+  // If a search doesn't complete then it's cancelled here using the currentRequest
+  // further up the currentRequest is set back to nil after error propogation
+  static func cancelSearch() {
+    if let currentRequest = currentRequest {
+      cancelCurrentRequest = true
+      currentRequest.cancel()
+    }
   }
   
 }

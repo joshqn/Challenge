@@ -31,7 +31,6 @@ class ImageResultCollectionViewCell: UICollectionViewCell {
     activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     // Start the animation
-    activityIndicator.startAnimating()
     activityIndicator.hidesWhenStopped = true
     
   }
@@ -47,6 +46,7 @@ class ImageResultCollectionViewCell: UICollectionViewCell {
   
   // Search for the image provide by the imageResult
   private func searchForImageWith(imageResult: ImageResult) {
+    activityIndicator.startAnimating()
     // Grab the requestReceipt so the cell can cancel the request is it's reused before finishing
     requestReceipt = Search.downloadImageWith(urlRequest: imageResult.urlRequest, withiD: imageResult.id, completion: { [weak self] isSuccessful in
       if isSuccessful {
@@ -57,7 +57,7 @@ class ImageResultCollectionViewCell: UICollectionViewCell {
         self?.layer.borderColor = UIColor.black.cgColor
         self?.requestReceipt = nil
         self?.isUserInteractionEnabled = true
-      }
+      } 
       
     })
   }
