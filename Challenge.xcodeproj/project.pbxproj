@@ -111,8 +111,8 @@
 		B06CE1361F292396004E7693 /* Challenge */ = {
 			isa = PBXGroup;
 			children = (
-				B01BBEF51F294E2500BFC51E /* Helpers */,
 				B06CE1371F292396004E7693 /* AppDelegate.swift */,
+				B01BBEF51F294E2500BFC51E /* Helpers */,
 				B01BBEEF1F29353600BFC51E /* Services */,
 				B06CE14E1F292EAD004E7693 /* Models */,
 				B06CE1491F292444004E7693 /* ViewControllers */,
