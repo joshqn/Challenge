@@ -40,7 +40,9 @@ class ImageResultCollectionViewCell: UICollectionViewCell {
   private func setupCellUI() {
     self.layer.cornerRadius = 5.0
     self.layer.borderWidth = 1.0
+    self.layer.borderColor = UIColor.clear.cgColor
     self.nameTextField.layer.isHidden = true
+    self.isUserInteractionEnabled = false
   }
   
   // Search for the image provide by the imageResult
@@ -54,6 +56,7 @@ class ImageResultCollectionViewCell: UICollectionViewCell {
         self?.nameTextField.text = imageResult.name
         self?.layer.borderColor = UIColor.black.cgColor
         self?.requestReceipt = nil
+        self?.isUserInteractionEnabled = true
       }
       
     })
