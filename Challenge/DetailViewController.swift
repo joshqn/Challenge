@@ -23,7 +23,7 @@ class DetailViewController: UIViewController {
     
     createAndAddGestureRecognizer()
     view.backgroundColor = .clear
-    
+    formatImageView()
     if let imageResult = imageResult {
       updateUIWith(imageResult: imageResult)
     }
@@ -40,6 +40,7 @@ class DetailViewController: UIViewController {
     transitioningDelegate = self
   }
   
+  // Create and add a gesture to dismiss the VC when tapped outside of the popUp View
   func createAndAddGestureRecognizer() {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeButtonTapped(_:)))
     tapGesture.cancelsTouchesInView = false
@@ -47,18 +48,21 @@ class DetailViewController: UIViewController {
     view.addGestureRecognizer(tapGesture)
   }
   
+  
   private func updateUIWith(imageResult: ImageResult) {
+    // Check cache for image associated with imageResult
     if let image = Search.downloader.imageCache?.image(for: imageResult.urlRequest, withIdentifier: imageResult.id) {
       imageView.image = image
     }
-    formatImageView()
     nameLabel.text = imageResult.name
     descriptionLabel.text = imageResult.description
     votesLabel.text = "Votes: \(imageResult.votes)"
     favoritesLabel.text = "Favorites: \(imageResult.favoritesCount)"
   }
   
+  // formats the imageView
   private func formatImageView() {
+    // Make sure the image is clipped for the rounded corners
     imageView.clipsToBounds = true
     imageView.layer.cornerRadius = 5.0
     imageView.layer.borderColor = UIColor.black.cgColor
@@ -73,20 +77,24 @@ class DetailViewController: UIViewController {
 // MARK: UIGestureRecognizerDelegate
 extension DetailViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    // If a user taps the UIView in the view or anything in the uiview this will return false. Otherwise it'll return true and dismiss.
     return (touch.view === self.view)
   }
 }
 
 // MARK: UIViewControllerTransitionDelegate
 extension DetailViewController: UIViewControllerTransitioningDelegate {
+  // Using a custom presentation controller
   func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
     return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
   }
   
+  // Use a custom animation controller to animate the VC when it's presented
   func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     return BounceAnimationController()
   }
   
+  // Use a custom animation controller to animate when the VC is dismissed
   func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     return SlideOutAnimationController()
   }

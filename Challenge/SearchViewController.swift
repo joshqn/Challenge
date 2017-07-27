@@ -32,10 +32,10 @@ class SearchViewController: UIViewController {
   
   override func viewDidLoad() {
       super.viewDidLoad()
-    
+    // Top inset needs to be adjusted b/c of the searchBar
     collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+    // Getting the shortest side helps make sure the cells aren't resized to be larger thus stretching the images when switching between portrait/landscape and visa versa
     framesShortestSideLength = CGFloat(self.view.frame.width < self.view.frame.height ? self.view.frame.width : self.view.frame.height)
-
   }
 
   override func didReceiveMemoryWarning() {
@@ -99,18 +99,8 @@ class SearchViewController: UIViewController {
     return indexPaths
   }
   
-  // Creates indexPaths to be Deleted
-  func IndexPathsToBeDeleted() -> [IndexPath] {
-    var indexPaths:[IndexPath] = []
-    
-    for i in 0..<endingNumberOfCells {
-      let indexPath = IndexPath(item: i, section: 0)
-      indexPaths.append(indexPath)
-    }
-    return indexPaths
-  }
-  
   // MARK: Alert Controllers
+  // If a network error is encountered this will be called
   func networkAlert() {
     let alert = UIAlertController(title: "Whooops...", message: "Looks like there's an error with the network. Try again later.", preferredStyle: .alert)
     let okButton = UIAlertAction(title: "OK", style: .cancel)
@@ -121,6 +111,7 @@ class SearchViewController: UIViewController {
     
   }
   
+  // Will be displayed if we reach the last possible page of the search term
   func noMoreResultsAlert() {
     let alert = UIAlertController(title: "That's all of them", message: "Looks like theres no other pictures. Try searching for something else", preferredStyle: .alert)
     let okButton = UIAlertAction(title: "OK", style: .cancel)
@@ -200,6 +191,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
+  // Attaches the searchBar to the top of the VC
   func position(for bar: UIBarPositioning) -> UIBarPosition {
     return .topAttached
   }
